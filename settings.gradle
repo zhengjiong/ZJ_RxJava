@@ -1,1 +1,1 @@
-include ':app', ':rxjavatest'
+include ':app', ':RxJavaTest', ':RxAndroid-0.24.0'
