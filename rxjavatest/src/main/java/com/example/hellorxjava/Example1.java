@@ -20,6 +20,7 @@ public class Example1 {
                 System.out.println("myObservable call");
                 subscriber.onNext("Hello RxJava");
                 subscriber.onCompleted();
+                //subscriber.add();
             }
         });
 
