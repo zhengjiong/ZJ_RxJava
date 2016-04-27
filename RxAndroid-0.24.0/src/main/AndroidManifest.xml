@@ -18,6 +18,7 @@
         <activity android:name=".BindActivityDemo1Activity"/>
         <activity android:name=".BindActivityDemo2Activity"/>
         <activity android:name=".BindActivityDemo3Activity"/>
+        <activity android:name=".BindActivityDemo4Activity"/>
         <activity android:name=".ButtonClickDemo1Activity"/>
         <activity android:name=".ViewObservableDemo1Activity"/>
         <activity android:name=".ViewObservableDemo2Activity"/>

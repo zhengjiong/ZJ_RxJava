@@ -12,7 +12,8 @@ public class Example3_BehaviorSubject {
 
     public static void main(String[] args){
         //test1();
-        test2();
+        //test2();
+        test3();
     }
 
 
@@ -67,5 +68,38 @@ public class Example3_BehaviorSubject {
         });
         behaviorSubject.onNext("3");
         behaviorSubject.onNext("4");
+    }
+
+    /**
+     * 运行结果:
+     *
+     * call -> s=2
+     * call -> s=3
+     * call -> s=4
+     * 222 call -> s=4
+     */
+    private static void test3(){
+        /**
+         * create("0")是设置一个数据初值, 但是订阅前又执行了3次onNext方法,behaviorSubject对象在订阅后将会只发送最后一个值给观察者,之后订阅的会正常发送
+         * 所以0,1,1.5都不会接收到
+         */
+        BehaviorSubject<String> behaviorSubject = BehaviorSubject.create("0");
+        behaviorSubject.onNext("1");
+        behaviorSubject.onNext("1.5");
+        behaviorSubject.onNext("2");
+        behaviorSubject.subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                System.out.println("111 call -> s=" + s);
+            }
+        });
+        behaviorSubject.onNext("3");
+        behaviorSubject.onNext("4");
+        behaviorSubject.subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                System.out.println("222 call -> s=" + s);
+            }
+        });
     }
 }

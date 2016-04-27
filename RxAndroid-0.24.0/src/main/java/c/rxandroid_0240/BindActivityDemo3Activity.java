@@ -15,7 +15,9 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.app.AppObservable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -171,5 +173,20 @@ public class BindActivityDemo3Activity extends AppCompatActivity {
          */
         //mCompositeSubscription.unsubscribe();
         mCompositeSubscription.clear();
+    }
+
+    void test5(){
+        AppObservable.bindActivity(this, BehaviorSubject.create(new Observable.OnSubscribe<Object>() {
+            @Override
+            public void call(Subscriber<? super Object> subscriber) {
+
+            }
+        }))
+        .subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+
+            }
+        });
     }
 }

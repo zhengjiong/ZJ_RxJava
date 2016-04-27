@@ -39,4 +39,10 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="ViewObservalbe demo 2"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="BindActivity demo 4"/>
 </LinearLayout>

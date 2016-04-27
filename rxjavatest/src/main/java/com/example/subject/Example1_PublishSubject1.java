@@ -18,7 +18,7 @@ import rx.subjects.PublishSubject;
  * 观察者们或者其它Subject都可以订阅它。
  *
  *
- * Subject主题是可观察者Observable(被观察者)的一个拓展，同时实现了Observer(观察者)接口，
+ * Subject是可观察者Observable(被观察者)的一个拓展，同时实现了Observer(观察者)接口，
  * 也就是说，通过引入Subject，我们将可观察者和观察者联系起来，这样主要是为了简化，
  * Subject能像观察者那样接受发送给它们的事件，也能像可观察者一样将事件发送给自己的订阅者。
  * Subject能成为RxJava的理想入口，当你有来自Rx外部的事件数据值时，你能将它们推送到一个Subject，
