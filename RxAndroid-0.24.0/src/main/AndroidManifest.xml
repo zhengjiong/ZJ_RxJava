@@ -15,8 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".BindActivityDemo_1"/>
-        <activity android:name=".BindActivityDemoActivity"/>
+        <activity android:name=".BindActivityDemo1Activity"/>
+        <activity android:name=".BindActivityDemo2Activity"/>
+        <activity android:name=".BindActivityDemo3Activity"/>
+        <activity android:name=".ButtonClickDemo1Activity"/>
+        <activity android:name=".ViewObservableDemo1Activity"/>
+        <activity android:name=".ViewObservableDemo2Activity"/>
     </application>
 
 </manifest>

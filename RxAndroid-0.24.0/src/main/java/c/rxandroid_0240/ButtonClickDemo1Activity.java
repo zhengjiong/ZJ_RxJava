@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
+import rx.android.AndroidSubscriptions;
+import rx.android.app.AppObservable;
 import rx.android.view.OnClickEvent;
 import rx.android.view.ViewObservable;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 import android.util.*;
 
-public class BindActivityDemo_1 extends RxBaseActivity {
+public class ButtonClickDemo1Activity extends RxBaseActivity {
     public final CompositeSubscription mCompositeSubscription = new CompositeSubscription();
     private Subscription mSubscription;
 
@@ -20,7 +25,7 @@ public class BindActivityDemo_1 extends RxBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bind_activity_1);
+        setContentView(R.layout.activity_bind_activity_9);
 
         final Button button = (Button) findViewById(R.id.btn);
         final Button button2 = (Button) findViewById(R.id.btn_unsubscribe);
@@ -32,23 +37,21 @@ public class BindActivityDemo_1 extends RxBaseActivity {
                 mCompositeSubscription.clear();
             }
         });
-        bindUi(RxUtil.click(button), new Action1<Object>() {
+        /*bindUi(RxUtil.click(button), new Action1<Object>() {
             @Override
             public void call(Object o) {
                 Log.i("zj", "Action1 call ");
             }
-        });
-        ViewObservable.clicks(button)
-            .subscribe(new Action1<OnClickEvent>() {
-                @Override
-                public void call(OnClickEvent onClickEvent) {
-                    Log.i("zj", "onclick");
-                }
-            });
-        /*mSubscription = AppObservable.bindActivity(this, Observable.create(new Observable.OnSubscribe<Object>() {
+        });*/
+
+        mSubscription = AppObservable.bindActivity(this, Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
             public void call(final Subscriber<? super Object> subscriber) {
                 Log.i("zj", "call ........");
+                /**
+                 * 当执行mCompositeSubscription.clear();的时候
+                 * 会在主线程中执行Log.i("zj", "call -----------------");
+                 */
                 subscriber.add(AndroidSubscriptions.unsubscribeInUiThread(new Action0() {
                     @Override
                     public void call() {
@@ -85,10 +88,10 @@ public class BindActivityDemo_1 extends RxBaseActivity {
 
             @Override
             public void onNext(Object o) {
-                Log.i("zj", "Subscriber onNext " + o);
+                Log.i("zj", "Subscriber onNext ");
             }
         });
-        mCompositeSubscription.add(mSubscription);*/
+        mCompositeSubscription.add(mSubscription);
     }
 
     @Override

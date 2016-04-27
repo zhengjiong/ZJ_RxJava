@@ -12,9 +12,11 @@ import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.app.AppObservable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * bindActivity()和bindFragment()方法默认使用AndroidSchedulers.mainThread()来执行观察者代码，
@@ -22,7 +24,9 @@ import rx.schedulers.Schedulers;
  * <p>
  * Created by zhengjiong on 16/4/26.
  */
-public class BindActivityDemoActivity extends AppCompatActivity {
+public class BindActivityDemo3Activity extends AppCompatActivity {
+
+    CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
     @InjectView(R.id.txt)
     TextView txt;
@@ -30,7 +34,7 @@ public class BindActivityDemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bind_activity);
+        setContentView(R.layout.activity_bind_activity_demo_3);
         ButterKnife.inject(this);
     }
 
@@ -54,12 +58,12 @@ public class BindActivityDemoActivity extends AppCompatActivity {
      *
      * OnSubscribe -> call 1
      * Observer -> onNext
-     * OnSubscribe -> call 2
-     * OnSubscribe -> onCompleted
+     * onDestroy mCompositeSubscription.clear()
+     * InterruptedException e
      *
      */
     private void test1() {
-        AppObservable.bindActivity(BindActivityDemoActivity.this, blockMainThread())
+        Subscription subscription = AppObservable.bindActivity(BindActivityDemo3Activity.this, blockMainThread())
                 .subscribeOn(Schedulers.io())//被观察者运行的线程
                 //这里不需要设置observeOn, 因为查看bindActivity源码,就已经设置了观察者是在主线程中运行了
                 //.observeOn(AndroidSchedulers.mainThread())//观察者在主线程中运行
@@ -81,6 +85,8 @@ public class BindActivityDemoActivity extends AppCompatActivity {
                         txt.setText(o.toString());
                     }
                 });
+
+        mCompositeSubscription.add(subscription);
     }
 
     /**
@@ -90,13 +96,12 @@ public class BindActivityDemoActivity extends AppCompatActivity {
      * 执行结果:
      * OnSubscribe -> call 1
      * Observer -> onNext
-     * OnSubscribe -> call 2
-     * Observer -> onNext
-     * OnSubscribe -> onCompleted
-     * Observer -> onCompleted
+     * onDestroy unsubscribe
+     * InterruptedException e
+     *
      */
     private void test2() {
-        blockMainThread()
+        Subscription subscription = blockMainThread()
                 .subscribeOn(Schedulers.io())//设置被观察者运行的线程
                 .observeOn(AndroidSchedulers.mainThread())//设置观察者在主线程中运行
                 .subscribe(new Observer() {//设置一个观察者
@@ -118,6 +123,8 @@ public class BindActivityDemoActivity extends AppCompatActivity {
                         txt.setText(o.toString());
                     }
                 });
+
+        mCompositeSubscription.add(subscription);
     }
 
 
@@ -133,22 +140,36 @@ public class BindActivityDemoActivity extends AppCompatActivity {
                     System.out.println(str1);
                     subscriber.onNext(str1);
 
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
 
                     String str2 = "OnSubscribe -> call 2";
                     System.out.println(str2);
                     subscriber.onNext(str2);
 
-                    Thread.sleep(500);
+                    //Thread.sleep(500);
 
                     System.out.println("OnSubscribe -> onCompleted");
-                    subscriber.onCompleted();
 
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    System.out.println("InterruptedException e");
+                    Observable.error(e);//如果已经执行了mSubscription1.unsubscribe(),那观察者还是不会收到onError消息
                 }
+                subscriber.onCompleted();
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("onDestroy mCompositeSubscription.clear()");
+
+        /**
+         * 查看源码unsubscribe和clear方法最后都会执行unsubscribeFromAll(unsubscribe);
+         */
+        //mCompositeSubscription.unsubscribe();
+        mCompositeSubscription.clear();
     }
 }

@@ -22,14 +22,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.btn_1, R.id.btn_2})
+    @OnClick({R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.btn_5, R.id.btn_6})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_1:
-                startActivity(new Intent(this, BindActivityDemoActivity.class));
+                startActivity(new Intent(this, BindActivityDemo1Activity.class));
                 break;
             case R.id.btn_2:
-                startActivity(new Intent(this, BindActivityDemo_1.class));
+                startActivity(new Intent(this, BindActivityDemo2Activity.class));
+                break;
+            case R.id.btn_3:
+                startActivity(new Intent(this, BindActivityDemo3Activity.class));
+                break;
+            case R.id.btn_4:
+                startActivity(new Intent(this, ButtonClickDemo1Activity.class));
+                break;
+            case R.id.btn_5:
+                startActivity(new Intent(this, ViewObservableDemo1Activity.class));
+                break;
+            case R.id.btn_6:
+                startActivity(new Intent(this, ViewObservableDemo2Activity.class));
                 break;
         }
     }
