@@ -11,9 +11,10 @@ import rx.subjects.BehaviorSubject;
 public class Example3_BehaviorSubject2 {
 
     public static void main(String[] args){
-        test1();
+        //test1();
         //test2();
-        //test3();
+        test3();
+        //test4();
     }
 
     /**
@@ -53,12 +54,37 @@ public class Example3_BehaviorSubject2 {
     }
 
     /**
+     * 这里改为其他Subject(PublishSubject),运行结果还是一样
+     *
+     * BehaviorSubjecth或PublishSubject虽然是Subject(Subject = Observable + Observer),
+     * 但是Subject必须要执行onNext,或者OnCompleted或onError,才会被观察者接收到,这里和Observable是不一样的(详细看test2()方法)
+     *
+     * 运行结果:
+     * Action1 call 1
+     * Action1 call 2
+     */
+    private static void test3() {
+
+        BehaviorSubject<Integer> behaviorSubject = BehaviorSubject.create();
+
+        behaviorSubject.subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                System.out.println("Action1 call " + integer);
+            }
+        });
+
+        behaviorSubject.onNext(1);
+        behaviorSubject.onNext(2);
+    }
+
+    /**
      * 未知
      *
      * 运行结果:
      * Subscriber -> call
      */
-    private static void test3() {
+    private static void test4() {
         Observable observable = BehaviorSubject.create(new Observable.OnSubscribe<Integer>() {
             @Override
             public void call(Subscriber<? super Integer> subscriber) {
