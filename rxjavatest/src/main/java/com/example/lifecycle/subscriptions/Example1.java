@@ -4,6 +4,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
 /**
@@ -81,6 +82,9 @@ public class Example1 {
                 }));
             }
         })
+        .observeOn(Schedulers.immediate())//当前线程, AndroidSchedulers.mainThread()安卓主线程
+        .subscribeOn(Schedulers.io())     //io线程,执行耗时操作
+        .unsubscribeOn(Schedulers.io())
         .subscribe(new Subscriber<Integer>() {
             @Override
             public void onCompleted() {
