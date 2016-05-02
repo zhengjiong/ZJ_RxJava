@@ -1,5 +1,7 @@
 package com.example.lifecycle.subscriptions;
 
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
@@ -31,6 +33,15 @@ public class Example1 {
      *
      */
     public static void main(String[] args){
+//        test1();
+        test2();
+    }
+
+    private static void test1() {
+        /**
+         * 这段代码是给Subscription(观察者)增加一个unsubscribe的回调事件。 也就是onCompleted或onError执行完成后，会自动对call进行一个终止。
+         * 如果不执行onCompleted或者onError是不会条用Action0中的方法的,必须要有unsbuscribe事件,如onCompleted onError,或者手动执行Subscription.unsubscribe
+         */
         Subscription subscription = Subscriptions.create(new Action0() {
             @Override
             public void call() {
@@ -40,5 +51,54 @@ public class Example1 {
 
         //这里执行unsubscribe()方法, 才会输出Action0 -> call,如果不执行什么都不会输出
         subscription.unsubscribe();
+    }
+
+    /**
+     * 执行结果:
+     *
+     * Subscriber -> onNext 1
+     * Subscriber -> onCompleted
+     * Action0 -> call 已经解除订阅
+     *
+     */
+    private static void test2(){
+        Subscription subscription = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                subscriber.onNext(1);
+                subscriber.onCompleted();
+
+                /**
+                 * 这段代码是给Subscription(观察者)增加一个unsubscribe的回调事件。 也就是onCompleted或onError执行完成后，
+                 * 会自动对call进行一个终止。如果不执行onCompleted或者onError是不会条用Action0中的方法的,
+                 * 必须要有unsbuscribe事件,如onCompleted onError,或者手动执行Subscription.unsubscribe(下面)
+                 */
+                subscriber.add(Subscriptions.create(new Action0() {
+                    @Override
+                    public void call() {
+                        System.out.println("Action0 -> call 已经解除订阅");
+                    }
+                }));
+            }
+        })
+        .subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                System.out.println("Subscriber -> onCompleted ");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("Subscriber -> onError ");
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                System.out.println("Subscriber -> onNext " + integer);
+            }
+        });
+
+
+        //subscription.unsubscribe();//执行后会执行上面Action0中的方法
     }
 }
