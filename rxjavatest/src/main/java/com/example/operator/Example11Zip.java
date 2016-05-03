@@ -1,6 +1,7 @@
 package com.example.operator;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,7 +33,147 @@ public class Example11Zip {
         //test1();
         //test2();
         //test3();
-        test4();
+        //test4();
+        test5();
+    }
+
+    /**
+     * 请求两个接口，对返回的数据进行结合
+     * https://segmentfault.com/a/1190000004966620
+     *
+     * 详解
+     * 请求GankApi中的数据使用map操作符进行转换，取出自己想要的list数据，然后结合ZhuangbiApi中的数据，形成新的数据集合，填充到view。
+     * Zip操作符使用函数按顺序结合多个Observables发射的数据项，然后它发射这个函数返回的结果，它只发射与数据项最少的那个Observable一样多的数据。
+     * 一般app中同一个界面有时会需要同时访问不同接口，然后将结果糅合后转为统一的格式后输出（例如将第三方广告 API 的广告夹杂进自家平台返回的数据 List 中）。
+     * 这种并行的异步处理比较麻烦，不过用了 zip() 之后就会简单明了。
+     */
+    /*private void load() {
+
+        swipeRefreshLayout.setRefreshing(true);
+        subscription = Observable.zip(Network.getGankApi().getBeauties(188, 1).map(BeautyResult2Beautise.newInstance()),
+                Network.getZhuangbiApi().search("装逼"),
+                new Func2<List<ImageInfoBean>, List<ImageInfoBean>, List<ImageInfoBean>>() {
+                    @Override
+                    public List<ImageInfoBean> call(List<ImageInfoBean> imageInfoBeen, List<ImageInfoBean> imageInfoBeen2) {
+
+                        int num = imageInfoBeen.size() < imageInfoBeen2.size() ? imageInfoBeen.size() : imageInfoBeen2.size();
+                        List<ImageInfoBean> list = new ArrayList<>();
+                        for (int i = 0; i < num; i++) {
+
+                            list.add(imageInfoBeen.get(i));
+                            list.add(imageInfoBeen2.get(i));
+
+                        }
+
+                        return list;
+                    }
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver());
+    }*/
+
+    /*public class BeautyResult2Beautise implements Func1<BeautyResult, List<ImageInfoBean>> {
+
+
+        public static BeautyResult2Beautise newInstance() {
+            return new BeautyResult2Beautise();
+        }
+
+
+        *//**
+         * 将接口返回的BeautyResult数据中的list部分提取出来，返回集合List<ImageInfoBean>
+         * @param beautyResult
+         * @return
+         *//*
+        @Override
+        public List<ImageInfoBean> call(BeautyResult beautyResult) {
+
+            List<ImageInfoBean> imageInfoBeanList = new ArrayList<>(beautyResult.results.size());
+
+            for (ImageInfoBean bean : beautyResult.results) {
+                ImageInfoBean imageInfoBean = new ImageInfoBean();
+
+                imageInfoBean.description = bean.desc;
+
+                imageInfoBean.image_url = bean.url;
+
+                imageInfoBeanList.add(imageInfoBean);
+
+            }
+
+            return imageInfoBeanList;
+        }
+    }*/
+
+    /*public interface GankApi {
+
+        @GET("data/福利/{number}/{page}")
+        Observable<BeautyResult> getBeauties(@Path("number") int number, @Path("page") int page);
+
+    }*/
+
+    /*public interface ZhuangbiApi {
+        @GET("search")
+        Observable<List<ImageInfoBean>> search(@Query("q") String query);
+    }*/
+
+    /*public static ZhuangbiApi getZhuangbiApi() {
+        if (zhuangbiApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl("http://zhuangbi.info/")
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            zhuangbiApi = retrofit.create(ZhuangbiApi.class);
+        }
+        return zhuangbiApi;
+    }*/
+
+    /**
+     *
+     * 如果两个集合数目不一样, 可以不用from方法(如:test4), 改而直接传入List集合
+     * 运行结果:
+     *
+     * Subscriber > onNext [A, B, C, D, A, B, C, D, E, F]
+     * Subscriber > onCompleted
+     */
+    private static void test5(){
+        //List<Integer> list1 = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        List<String> list2 = Arrays.asList("A", "B", "C", "D");
+        List<String> list3 = Arrays.asList("A", "B", "C", "D", "E", "F");
+
+        Observable o1 = Observable.just(list2);
+        Observable o2 = Observable.just(list3);
+
+        Observable.zip(o1, o2, new Func2<List<String>, List<String>, List<String>>() {
+
+
+            @Override
+            public List<String> call(List<String> l1, List<String> l2) {
+                List<String> zipList = new ArrayList<String>();
+
+                zipList.addAll(l1);
+                zipList.addAll(l2);
+                return zipList;
+            }
+        }).subscribe(new Subscriber<List<String>>() {
+            @Override
+            public void onCompleted() {
+                System.out.println("Subscriber > onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("Subscriber > onError");
+            }
+
+            @Override
+            public void onNext(List<String> strings) {
+                System.out.println("Subscriber > onNext " + strings.toString());
+            }
+
+        });
     }
 
     /**
