@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * Created by zhengjiong on 16/5/3.
@@ -12,7 +14,50 @@ import rx.Observer;
 public class Example9Timer {
 
     public static void main(String[] args) throws IOException {
-        test1();
+        //test1();
+        test2();
+    }
+
+    /**
+     * 延迟2秒执行
+     *
+     * 运行结果:
+     *
+     * flatMap -> call 0
+     * Subscriber -> onNext 0
+     * Subscriber -> onCompleted
+     */
+    private static void test2() {
+        Observable.timer(2, TimeUnit.SECONDS)
+            .flatMap(new Func1<Long, Observable<String>>() {
+                @Override
+                public Observable<String> call(Long l) {
+                    System.out.println("flatMap -> call " + l);
+                    return Observable.just(String.valueOf(l));
+                }
+            })
+            .subscribe(new Subscriber<String>() {
+                @Override
+                public void onCompleted() {
+                    System.out.println("Subscriber -> onCompleted");
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    System.out.println("Subscriber -> onError");
+                }
+
+                @Override
+                public void onNext(String s) {
+                    System.out.println("Subscriber -> onNext " + s);
+                }
+            });
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

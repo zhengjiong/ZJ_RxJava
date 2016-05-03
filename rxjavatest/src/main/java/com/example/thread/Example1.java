@@ -14,6 +14,12 @@ package com.example.thread;
  */
 public class Example1 {
 
+    /**
+     * subscribeOn 用来指定 Observable.create 中的代码在那个 Scheduler 中执行。
+     *
+     * observeOn 控制数据流的另外一端。你的 observer 如何收到事件。
+     * 也就是在那个线程中回调 observer 的 onNext/onError/onCompleted 函数。
+     */
     public static void main(String[] args){
         /*Observable.just("hello rxJava")
                 .subscribeOn(Schedulers.io())//指定观察者运行的线程(io线程)

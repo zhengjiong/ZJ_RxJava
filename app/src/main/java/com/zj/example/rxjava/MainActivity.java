@@ -24,14 +24,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         /**
-         * Observable中处理耗时操作
+         * subscribeOn 用来指定 Observable.create 中的代码在那个 Scheduler 中执行。
+         *
+         * observeOn 控制数据流的另外一端。你的 observer 如何收到事件。
+         * 也就是在那个线程中回调 observer 的 onNext/onError/onCompleted 函数。
          */
         Observable.create(new Observable.OnSubscribe<String>() {
                 @Override
                 public void call(Subscriber<? super String> subscriber) {
                     System.out.println("-----------------------");
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

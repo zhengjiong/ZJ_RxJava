@@ -4,15 +4,20 @@ import com.google.common.collect.Lists;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
+ * http://rxjava.yuxingxin.com/chapter6/merge.html
+ * http://blog.chengyunfeng.com/?p=972
+ *
  * 在”异步的世界“中经常会创建这样的场景，我们有多个来源但是又只想有一个结果：多输入，单输出。
  * RxJava的merge()方法将帮助你把两个甚至更多的Observables合并到他们发射的数据项里。
  *
@@ -51,6 +56,12 @@ public class Example12Merge {
      * merge -> call o2-2
      * merge -> call o2-1
      * merge -> call o2-0
+     * merge -> call 1
+     * merge -> call 2
+     * merge -> call 3
+     * merge -> call 4
+     * merge -> call 5
+     *
      */
     private static void test2() {
         List<String> list1 = new ArrayList<>();
@@ -66,12 +77,36 @@ public class Example12Merge {
         Observable o1 = Observable.from(list1);
         Observable o2 = Observable.from(list2);
 
-        Observable.merge(o1, o2).observeOn(Schedulers.immediate()).subscribe(new Action1<String>() {
+        List<Integer> list3 = Arrays.asList(1, 2, 3, 4, 5);
+        Observable o3 = Observable.from(list3)
+            .map(new Func1<Integer, String>() {
+                /**
+                 * 方法1: 这里必须执行转换操作, 因为这里用的是Integer,但是o1和o2用的是String, 不转换会报异常
+                 * Exception in thread "main" rx.exceptions.OnErrorNotImplementedException: java.lang.Integer cannot be cast to java.lang.String
+                 *
+                 * 方法2: 也可以不用转换但是,下面的merge Action1<String>, 就不能用String, 必须改成Object
+                 */
+                @Override
+                public String call(Integer integer) {
+                    return String.valueOf(integer);
+                }
+            });
+
+        Observable.merge(o1, o2, o3).subscribe(new Action1<String>() {
             @Override
             public void call(String i) {
                 System.out.println("merge -> call " + i);
             }
+
+            /**
+             * 如果o3不用map转换这里需用Object类型
+             */
+            /*@Override
+            public void call(Object i) {
+                System.out.println("merge -> call " + i);
+            }*/
         });
+
     }
 
     /**
