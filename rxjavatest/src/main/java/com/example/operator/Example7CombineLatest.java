@@ -8,7 +8,6 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func2;
 import rx.functions.FuncN;
-import rx.schedulers.Schedulers;
 
 /**
  * CombineLast操作符
@@ -18,7 +17,7 @@ import rx.schedulers.Schedulers;
  *
  * Created by zhengjiong on 16/4/28.
  */
-public class Example7 {
+public class Example7CombineLatest {
 
     /**
      * 运行结果:
@@ -45,7 +44,7 @@ public class Example7 {
     private static void test1() {
 
 
-        Example7 example7 = new Example7();
+        Example7CombineLatest example7 = new Example7CombineLatest();
         example7.combineListObserver().subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer i) {
@@ -69,7 +68,7 @@ public class Example7 {
      * CombineLatest:9
      */
     private static void test2(){
-        Example7 example7 = new Example7();
+        Example7CombineLatest example7 = new Example7CombineLatest();
         example7.combineLatestObserver().subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer i) {
