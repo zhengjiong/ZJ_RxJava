@@ -1,63 +1,38 @@
 package com.zj.example.rxjava;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func0;
-import rx.schedulers.Schedulers;
-
-public class MainActivity extends AppCompatActivity {
-
-    private TextView txt;
+/**
+ * Created by zhengjiong on 16/5/3.
+ */
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_layout);
 
-        txt = (TextView) findViewById(R.id.txt);
+        Button button1 = (Button) findViewById(R.id.btn1);
+        Button button2 = (Button) findViewById(R.id.btn2);
 
+        button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+    }
 
-        /**
-         * subscribeOn 用来指定 Observable.create 中的代码在那个 Scheduler 中执行。
-         *
-         * observeOn 控制数据流的另外一端。你的 observer 如何收到事件。
-         * 也就是在那个线程中回调 observer 的 onNext/onError/onCompleted 函数。
-         */
-        Observable.create(new Observable.OnSubscribe<String>() {
-                @Override
-                public void call(Subscriber<? super String> subscriber) {
-                    System.out.println("-----------------------");
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("OnSubscribe call");
-                    System.out.println(Thread.currentThread().toString());
-                    subscriber.onNext("hello rxJava");
-                    System.out.println("-----------------------");
-                }
-            })
-            .subscribeOn(Schedulers.io())//指定观察者运行的线程(io线程)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<String>() {
-                @Override
-                public void call(String s) {
-                    System.out.println("==================");
-                    System.out.println("Action1 call");
-                    System.out.println(Thread.currentThread().toString());
-                    System.out.println("s=" + s);
-                    txt.setText(s);
-                    System.out.println("==================");
-                }
-            });
-
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn1:
+                startActivity(new Intent(MainActivity.this, SchedulersTestActivity.class));
+                break;
+            case R.id.btn2:
+                startActivity(new Intent(MainActivity.this, CombineLatestTestActivity.class));
+                break;
+        }
     }
 }
