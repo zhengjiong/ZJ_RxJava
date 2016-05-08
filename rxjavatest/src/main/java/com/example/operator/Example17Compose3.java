@@ -12,6 +12,8 @@ import rx.schedulers.Schedulers;
 
 /**
  * 使用Compose操作符来优化Example15, 总结看Example18
+ * http://www.jianshu.com/p/e9e03194199e
+ *
  * Created by zhengjiong on 16/5/7.
  */
 public class Example17Compose3 {

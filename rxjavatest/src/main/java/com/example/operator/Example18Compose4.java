@@ -12,6 +12,8 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
+ * http://www.jianshu.com/p/e9e03194199e
+ *
  * 使用单例优化Example17
  *
  * 现在你可能会好奇，compose()操作符和flatMap()操作符有何区别。

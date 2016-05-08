@@ -19,4 +19,18 @@
         android:layout_marginTop="10dp"
         android:text="CombineLatest Test"
         android:textAllCaps="false"/>
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="debounce Example "
+        android:textAllCaps="false"/>
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="debounce_switchMap Example"
+        android:textAllCaps="false"/>
 </LinearLayout>

@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".SchedulersTestActivity"/>
         <activity android:name=".CombineLatestTestActivity"/>
+        <activity android:name=".DebounceExampleActivity"/>
+        <activity android:name=".DebounceAndSwitchMapExampleActivity"/>
     </application>
 
 </manifest>
