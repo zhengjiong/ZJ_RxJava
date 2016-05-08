@@ -21,11 +21,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button2 = (Button) findViewById(R.id.btn2);
         Button button3 = (Button) findViewById(R.id.btn3);
         Button button4 = (Button) findViewById(R.id.btn4);
+        Button button5 = (Button) findViewById(R.id.btn5);
 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
         button4.setOnClickListener(this);
+        button5.setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn4:
                 startActivity(new Intent(MainActivity.this, DebounceAndSwitchMapExampleActivity.class));
+                break;
+            case R.id.btn5:
+                startActivity(new Intent(MainActivity.this, ThrottleFirstAndDebounceExampleActivity.class));
                 break;
         }
     }

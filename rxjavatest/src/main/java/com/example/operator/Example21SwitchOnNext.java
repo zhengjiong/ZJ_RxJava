@@ -10,7 +10,7 @@ import rx.functions.Func1;
 /**
  * Created by zhengjiong on 16/5/7.
  */
-public class Example20SwitchOnNext {
+public class Example21SwitchOnNext {
 
     public static void main(String[] args){
         //test1();

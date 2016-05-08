@@ -19,6 +19,7 @@ import rx.functions.Action1;
  *
  * 重要: 每发射一个数据都会使用debounce设置的时间(500)来判断是否过快
  *
+ *
  * Created by zhengjiong on 16/5/7.
  */
 public class DebounceExampleActivity extends AppCompatActivity {
