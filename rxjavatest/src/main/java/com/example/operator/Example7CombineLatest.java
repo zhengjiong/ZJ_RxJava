@@ -13,7 +13,14 @@ import rx.functions.FuncN;
  * CombineLast操作符
  * CombineLatest操作符可以将2~9个Observable发射的数据组装起来然后再发射出来。不过还有两个前提：
  * 1.所有的Observable都发射过数据。
- * 2.满足条件1的时候任何一个Observable发射一个数据，就将所有Observable最新发射的数据按照提供的函数组装起来发射出去。
+ * 2.满足条件1的时候任何一个Observable发射一个数据，就将所有Observable最新发射的数据按照提供的函数组装起来发射出去。'
+ *
+ * --------------------------------------------------------------------------------------------------
+ *
+ * CombineLatest操作符新网类似zip, 但是只有当原始的Observable中每一个都发射了一条数据时zip才发射数据.
+ * CombineLatest则在原始的Observable中任意一个发射了数据时发射一条数据.
+ * 当原始Observable的任何一个发射了一条数据时, CombineLatest使用一个函数结合它们最近发射的数据, 然后发射这个函数的返回值.
+ *
  *
  * Created by zhengjiong on 16/4/28.
  */

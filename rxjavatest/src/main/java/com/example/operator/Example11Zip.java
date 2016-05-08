@@ -14,7 +14,7 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 /**
- * 在一种新的可能场景中处理多个数据来源时会带来：多从个Observables接收数据，处理它们，
+ * 在一种新的可能场景中处理多个数据来源时会带来：从多个Observables接收数据，处理它们，
  * 然后将它们合并成一个新的可观测序列来使用。RxJava有一个特殊的方法可以完成：zip()合并两
  * 个或者多个Observables发射出的数据项，根据指定的函数Func*变换它们，并发射一个新值。
  *
@@ -32,9 +32,9 @@ public class Example11Zip {
     public static void main(String[] args) throws IOException {
         //test1();
         //test2();
-        //test3();
+        test3();
         //test4();
-        test5();
+        //test5();
     }
 
     /**
@@ -338,9 +338,9 @@ public class Example11Zip {
 
     /**
      *
-     * 如何有多个 源 Observable，则 zip 会等待最慢的一个 Observable 发射完数据才开始组合这次发射的所有数据。
+     * 如果有多个 源 Observable，则 zip 会等待最慢的一个 Observable 发射完数据才开始组合这次发射的所有数据。
      *
-     * 虽然第二个Observable是每个100毫秒执行的, 使用zip后,第二个Observable也会等待第一个执行完后再执行.
+     * 虽然第二个Observable是每个100毫秒执行的, 使用zip后, Observable也会等待第一个Observable发射完数据才组合这次发射的数据.
      *
      * 输出结果:
      *
