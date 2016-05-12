@@ -16,7 +16,9 @@ import rx.functions.Action1;
 /**
  *
  * 总结: throttleFirst和debounce效果有点不一样
- * 连续点击button1, 每过500毫秒都会触发一次onclick事件,
+ * 连续点击button1, 每过500毫秒都会触发一次onclick事件 (throttleFirst操作符定时查看一个Observable，发射在那段时间内的第一项数据。)
+ * throttleFirst: 注意：如果自上次采样以来，原始Observable没有发射任何数据，这个操作返回的Observable在那段时间内也不会发射任何数据。
+ *
  * 连续点击button2, 只会在最后停止点击才会触发一次onclick事件
  *
  * 我们通过使用throttleFirst操作符来解决按钮被多次点击的问题。throttleFirst允许设置一个时间长度，

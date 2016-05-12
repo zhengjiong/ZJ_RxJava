@@ -7,6 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by zhengjiong on 16/5/3.
  */
@@ -22,12 +29,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button3 = (Button) findViewById(R.id.btn3);
         Button button4 = (Button) findViewById(R.id.btn4);
         Button button5 = (Button) findViewById(R.id.btn5);
+        Button button6 = (Button) findViewById(R.id.btn6);
 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
         button4.setOnClickListener(this);
         button5.setOnClickListener(this);
+        button6.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -48,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn5:
                 startActivity(new Intent(MainActivity.this, ThrottleFirstAndDebounceExampleActivity.class));
                 break;
+            case R.id.btn6:
+                startActivity(new Intent(MainActivity.this, ThrottleLastAndSampleExampleActivity.class));
+                break;
         }
     }
+
+
 }

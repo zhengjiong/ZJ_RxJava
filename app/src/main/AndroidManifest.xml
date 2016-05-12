@@ -20,6 +20,7 @@
         <activity android:name=".DebounceExampleActivity"/>
         <activity android:name=".DebounceAndSwitchMapExampleActivity"/>
         <activity android:name=".ThrottleFirstAndDebounceExampleActivity"/>
+        <activity android:name=".ThrottleLastAndSampleExampleActivity"/>
     </application>
 
 </manifest>

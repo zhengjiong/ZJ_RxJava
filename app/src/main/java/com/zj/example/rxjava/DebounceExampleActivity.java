@@ -17,7 +17,7 @@ import rx.functions.Action1;
  * debounce()函数过滤掉由Observable发射的速率过快的数据；如果在一个指定的时间间隔过去了仍旧没有发射一个，那么它将发射最后的那个。
  * debounce()函数开启一个内部定时器，如果在这个时间间隔内没有新的数据发射，则新的Observable发射出最后一个数据,
  *
- * 重要: 每发射一个数据都会使用debounce设置的时间(500)来判断是否过快
+ * 重要: 每发射一个数据都会使用debounce设置的时间(500)来判断是否过快, 如果在500ms以内将被判定为发射过快而被过滤.
  *
  *
  * Created by zhengjiong on 16/5/7.
@@ -39,21 +39,5 @@ public class DebounceExampleActivity extends AppCompatActivity {
                         System.out.println("onTextChanged " + charSequence);
                     }
                 });
-        /*editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //System.out.println("beforeTextChanged " + s);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("onTextChanged " + s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                //System.out.println("afterTextChanged " + s.toString());
-            }
-        });*/
     }
 }
