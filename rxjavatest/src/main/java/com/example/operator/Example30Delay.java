@@ -26,17 +26,10 @@ import rx.schedulers.Schedulers;
  */
 public class Example30Delay {
 
-    /**
-     * 运行结果:
-     *
-     * onNext 1
-     * onNext 2
-     * onNext 3
-     * onCompleted
-     */
+
     public static void main(String[] args){
-        //test1();
-        test2();
+        test1();
+        //test2();
 
     }
 
@@ -75,6 +68,14 @@ public class Example30Delay {
             });
     }
 
+    /**
+     * 运行结果:
+     *
+     * onNext 1
+     * onNext 2
+     * onNext 3
+     * onCompleted
+     */
     private static void test1() {
         Observable.just(1, 2, 3)
             .delay(1, TimeUnit.SECONDS, Schedulers.immediate())
