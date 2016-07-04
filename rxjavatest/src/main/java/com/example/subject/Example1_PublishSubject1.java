@@ -80,7 +80,7 @@ public class Example1_PublishSubject1 {
                 subscriber.onNext("3");
                 subscriber.onNext("4");
             }
-        });
+        }).asObservable();
         observable.subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
