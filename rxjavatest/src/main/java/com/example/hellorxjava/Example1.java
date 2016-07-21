@@ -21,7 +21,10 @@ public class Example1 {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 System.out.println("myObservable call");
-                subscriber.onNext("Hello RxJava");
+                System.out.println("Hello1 onNext");
+                subscriber.onNext("Hello1 RxJava");
+                System.out.println("Hello2 onNext");
+                subscriber.onNext("Hello2 RxJava");
                 subscriber.onCompleted();
                 //subscriber.onError(new NullPointerException());
 
@@ -98,6 +101,12 @@ public class Example1 {
 
             @Override
             public void onNext(String s) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 System.out.println("mySubscriber onNext s=" + s);
             }
         });
