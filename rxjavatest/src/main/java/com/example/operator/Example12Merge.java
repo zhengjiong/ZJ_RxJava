@@ -92,7 +92,7 @@ public class Example12Merge {
                 }
             });
 
-        Observable.merge(o1, o2, o3).subscribe(new Action1<String>() {
+        Observable.merge(o1, o2, o3).subscribeOn(Schedulers.immediate()).subscribe(new Action1<String>() {
             @Override
             public void call(String i) {
                 System.out.println("merge -> call " + i);
