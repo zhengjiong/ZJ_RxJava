@@ -26,7 +26,13 @@ public class OperatorTest {
         items.add("6");
 
         Observable.just(items)
-                //doOnNext就是执行到哪就取出哪的数据, 并不是执行在subscriber中的onNext之前
+                //doOnNext()的执行在onNext()之前，对数据进行相关处理
+                //doOnNext并不是在onnext前执行,如果把doOnNext写到distinct前面就会打印出其中重复的数据,
+                //doOnNext相当于就是执行到哪就会取出哪的数据
+                //最重要的一点是:这次操作会触发Subscriber中的onNext方法, 那doOnNext才会执行, 如果之前
+                //出现过异常,就不会执行onNext方法, doOnNext也就不会执行,
+                //所以只要能执行onNext, 那doOnNext就能执行, 如果不能执行
+                //onNext那doOnNext也不能执行
                 .doOnNext(new Action1<List<String>>() {
                     @Override
                     public void call(List<String> strings) {
@@ -57,8 +63,13 @@ public class OperatorTest {
                 })
                 .distinct()//过滤掉重复的数据
                 .doOnNext(new Action1<Integer>() {
+                    //doOnNext()的执行在onNext()之前，对数据进行相关处理
                     //doOnNext并不是在onnext前执行,如果把doOnNext写到distinct前面就会打印出其中重复的数据,
                     //doOnNext相当于就是执行到哪就会取出哪的数据
+                    //最重要的一点是:这次操作会触发Subscriber中的onNext方法, 那doOnNext才会执行, 如果之前
+                    //出现过异常,就不会执行onNext方法, doOnNext也就不会执行,
+                    //所以只要能执行onNext, 那doOnNext就能执行, 如果不能执行
+                    //onNext那doOnNext也不能执行
                     @Override
                     public void call(Integer integer) {
                         System.out.println("doOnNext 1 ->" + integer);

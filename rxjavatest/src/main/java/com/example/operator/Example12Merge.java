@@ -65,12 +65,12 @@ public class Example12Merge {
      */
     private static void test2() {
         List<String> list1 = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             list1.add("o1-"+i);
         }
 
         List<String> list2 = new ArrayList<>();
-        for (int i = 10; i >= 0; i--) {
+        for (int i = 3; i >= 0; i--) {
             list2.add("o2-"+i);
         }
 
