@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ZJ_RxJava</string>
+    <string name="test" formatted="false">直接取消需支付总服务金额%s\%的违约金赔付侍酒师</string>
 </resources>

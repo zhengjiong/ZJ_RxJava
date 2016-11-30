@@ -3,7 +3,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""/>
     <Button
         android:id="@+id/btn1"
         android:layout_width="match_parent"
@@ -46,5 +50,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="sample and throttleLast Example"
+        android:textAllCaps="false"/>
+    <Button
+        android:id="@+id/btn7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Concat V sFlatMap Example"
         android:textAllCaps="false"/>
 </LinearLayout>

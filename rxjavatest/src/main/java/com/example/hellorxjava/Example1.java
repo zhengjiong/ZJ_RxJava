@@ -39,6 +39,16 @@ public class Example1 {
                     }
                 }));
 
+                /**
+                 * 在安卓代码中使用MainThreadSubscription(在主线程), 来执行onUnsubscribe操作
+                 */
+                /*subscriber.add(new MainThreadSubscription() {
+                    @Override
+                    protected void onUnsubscribe() {
+                        drawer.removeDrawerListener(listener);
+                    }
+                });*/
+
             }
         });
 

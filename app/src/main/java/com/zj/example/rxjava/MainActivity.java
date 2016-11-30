@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button4 = (Button) findViewById(R.id.btn4);
         Button button5 = (Button) findViewById(R.id.btn5);
         Button button6 = (Button) findViewById(R.id.btn6);
+        Button button7 = (Button) findViewById(R.id.btn7);
+
 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button4.setOnClickListener(this);
         button5.setOnClickListener(this);
         button6.setOnClickListener(this);
+        button7.setOnClickListener(this);
 
 
     }
@@ -61,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn6:
                 startActivity(new Intent(MainActivity.this, ThrottleLastAndSampleExampleActivity.class));
+                break;
+            case R.id.btn7:
+                startActivity(new Intent(MainActivity.this, ObservableConcatVsFlatMapSampleActivity.class));
                 break;
         }
     }

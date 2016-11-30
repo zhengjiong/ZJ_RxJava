@@ -21,6 +21,7 @@
         <activity android:name=".DebounceAndSwitchMapExampleActivity"/>
         <activity android:name=".ThrottleFirstAndDebounceExampleActivity"/>
         <activity android:name=".ThrottleLastAndSampleExampleActivity"/>
+        <activity android:name=".ObservableConcatVsFlatMapSampleActivity"/>
     </application>
 
 </manifest>

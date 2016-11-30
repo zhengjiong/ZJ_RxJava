@@ -71,13 +71,18 @@ public class Example13Concat {
                 }
             });
         Observable.concat(o1, o2)
+                .onErrorResumeNext(new Func1<Throwable, Observable>() {
+                    @Override
+                    public Observable call(Throwable throwable) {
+                        return null;
+                    }
+                })
             .subscribe(new Action1<String>() {
                 @Override
                 public void call(String mergeString) {
                     System.out.println("concat -> call " + mergeString);
                 }
             });
-
         try {
             System.in.read();
         } catch (IOException e) {
