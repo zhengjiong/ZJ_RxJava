@@ -1,6 +1,7 @@
 package com.example.error;
 
 import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -53,5 +54,24 @@ public class Example2 {
                         System.out.println("onCompleted");
                     }
                 });
+    }
+
+    void test2(){
+        Observer<String> observer = new Observer<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+        };
     }
 }
