@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -105,6 +106,16 @@ public class Example12Merge {
             public void call(Object i) {
                 System.out.println("merge -> call " + i);
             }*/
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+
+            }
+        }, new Action0() {
+            @Override
+            public void call() {
+                System.out.println("onComplete");
+            }
         });
 
     }
